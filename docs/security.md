@@ -261,11 +261,7 @@ This is a reference implementation / prototype.<br>
 
 If you discover a security vulnerability in Fugata, please report it privately.
 
-### How to Report
-
-**Discord:** https://discord.com/users/1424341570965999646
-
-**Include in your report:**
+## **Include in your report:**
 1. **Description:** Clear explanation of the vulnerability.
 2. **Impact:** What an attacker could accomplish.
 3. **Steps to reproduce:** Detailed reproduction steps.
