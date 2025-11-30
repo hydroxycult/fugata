@@ -981,4 +981,4 @@ Before deploying:
 - [ ] Rate limits tuned for expected traffic
 
 
-**For deployment guides, see README.md. For API usage, see API.md.**
+**For a quick start, see [README.md](https://github.com/hydroxycult/fugata/blob/main/README.md#quick-start). For API usage, see [API.md](api.md).**
