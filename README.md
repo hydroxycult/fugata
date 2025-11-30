@@ -16,7 +16,125 @@ This is a reference implementation for self-hosting. The backend provides a REST
 ## Documentation
 
 
-[API](docs/api.md) | [Architecture](docs/architecture.md) | [Configuration](docs/configuration.md) | [Security](docs/security.md)
+[API](docs/api.md) | [Architecture](docs/architecture.md) | [Configuration](docs/configuration.md) | [Security](docs/security.md) 
+
+
+## Quick Start 
+
+### Step 1: Clone Repository
+
+```bash
+git clone https://github.com/yourusername/fugata.git
+cd fugata/backend
+```
+
+### Step 2: Choose Database
+
+**Option A: SQLite** (development/testing)
+
+```bash
+cp .env.example .env
+
+#Edit .env and set:
+# DATABASE_URL=sqlite://fugada.db
+```
+
+**Option B: PostgreSQL** (production)
+
+```bash
+# Create database
+createdb fugata
+
+# Or via psql:
+psql -U postgres
+CREATE DATABASE fugata;
+\q
+
+cp .env.example .env
+
+# Edit .env and set:
+# DATABASE_URL=postgresql://username:password@localhost/fugata
+```
+
+### Step 3: Generate Secret Keys
+
+```bash
+# Generate three 32-byte random keys
+openssl rand -hex 32  # Copy for IP_HASH_KEY
+openssl rand -hex 32  # Copy for PEPPER
+openssl rand -base64 32  # Copy for KMS_LOCAL_KEY
+
+# Add these to your .env file
+```
+
+Your `.env` should now have:
+
+```bash
+DATABASE_URL=sqlite://fugata.db
+IP_HASH_KEY=<first hex value>
+PEPPER=<second hex value>
+KMS_LOCAL_KEY=<base64 value>
+```
+
+### Step 4: Run Database Migrations
+
+```bash
+# Install SQLx CLI
+cargo install sqlx-cli --no-default-features --features postgres,sqlite
+
+# Run migrations
+sqlx migrate run
+
+# Verify tables created
+sqlite3 fugata.db ".schema"  # For SQLite
+# OR
+psql fugata -c "\dt"  # For PostgreSQL
+```
+
+### Step 5: Build and Run
+
+```bash
+# Build (takes ~2 minutes first time)
+cargo build --release
+
+# Run server
+cargo run --release
+
+# Server starts on http://localhost:8080
+```
+
+### Step 6: Test It Works
+
+In another terminal:
+
+```bash
+# Health check
+curl http://localhost:8080/healthz
+# Should return: {"status":"ok"}
+
+# Create a secret
+curl -X POST http://localhost:8080/secrets \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "my-super-secret-password",
+    "duration": "1h",
+    "one_time": true
+  }'
+
+# Response:
+# {
+#   "id": "fug_abc123...",
+#   "deletion_token": "tok_xyz789...",
+#   "expires_at": "2025-12-01T12:00:00Z"
+# }
+
+# Retrieve the secret (replace with your ID)
+curl http://localhost:8080/secrets/fug_abc123...
+
+# Should return the content, then delete itself
+```
+
+You have a working Fugata server.
 
 ## Limitations
 
