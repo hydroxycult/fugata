@@ -208,19 +208,19 @@ cargo test
 **CREATE (POST /secrets)**
 - KMS failure during DEK wrapping → Returns `503`
 - **Guaranteed no side effects:**
-  - ❌ No database insert
-  - ❌ No deletion token creation
-  - ❌ No audit "create" event
-  - ❌ No cache writes
+  - No database insert
+  - No deletion token creation
+  - No audit "create" event
+  - No cache writes
 - **Safe to retry** once KMS recovers
 
 **GET (GET /secrets/:id)**
 - KMS failure during DEK unwrap → Returns `503`
 - **Guaranteed no mutations:**
-  - ❌ One-time secrets NOT marked as "used"
-  - ❌ No database updates
-  - ❌ No cache invalidation
-  - ❌ No audit "get" event
+  - One-time secrets NOT marked as "used"
+  - No database updates
+  - No cache invalidation
+  - No audit "get" event
 - **Safe to retry** - secret remains intact
 
 **DELETE (DELETE /secrets/:id)**
@@ -408,5 +408,3 @@ Built with:
 - [SQLx](https://github.com/launchbadge/sqlx) - Database toolkit
 - [RustCrypto](https://github.com/RustCrypto) - Cryptography
 - [Argon2](https://github.com/P-H-C/phc-winner-argon2) - Password hashing
-
-Inspired by [Drylax](https://github.com/example/drylax) security model.
