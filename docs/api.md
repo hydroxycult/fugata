@@ -703,7 +703,7 @@ No official client libraries yet. Contributions welcome!
 
 ### HTTPS Required
 
-** WARNING:** Always use HTTPS in production.
+**WARNING:** Always use HTTPS in production.
 
 HTTP transmits secrets in plaintext over the network.
 
