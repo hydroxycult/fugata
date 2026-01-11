@@ -166,28 +166,28 @@ These are NOT considered security vulnerabilities:
 
 ### What Fugata Does
 
- **End-to-end encryption** (AES-256-GCM)
- **Key management** (DEK/KEK model)
- **Authentication** (deletion tokens)
- **Audit logging** (fail-closed)
- **IP privacy** (hashed, not stored)
- **Rate limiting** (per-IP, token bucket)
- **Input validation** (size limits, type checking)
- **SQL injection prevention** (prepared statements)
- **Replay protection** (deletion tokens)
- **Memory safety** (Rust compiler guarantees)
+- **End-to-end encryption** (AES-256-GCM)
+- **Key management** (DEK/KEK model)
+- **Authentication** (deletion tokens)
+- **Audit logging** (fail-closed)
+- **IP privacy** (hashed, not stored)
+- **Rate limiting** (per-IP, token bucket)
+- **Input validation** (size limits, type checking)
+- **SQL injection prevention** (prepared statements)
+- **Replay protection** (deletion tokens)
+- **Memory safety** (Rust compiler guarantees)
 
 
 ### What Fugata Does NOT Do
 
- **User authentication** (no login/passwords)
- **Access controls** (anyone with link can access)
- **Multi-factor auth** (not applicable)
- **Web application firewall** (use external WAF)
- **DDoS protection** (use CDN/infrastructure)
- **Automatic key rotation** (manual process required)
- **Encrypted backups** (database backups are your responsibility)
- **Compliance certification** (HIPAA, PCI-DSS, etc.)
+- **User authentication** (no login/passwords)
+- **Access controls** (anyone with link can access)
+- **Multi-factor auth** (not applicable)
+- **Web application firewall** (use external WAF)
+- **DDoS protection** (use CDN/infrastructure)
+- **Automatic key rotation** (manual process required)
+- **Encrypted backups** (database backups are your responsibility)
+- **Compliance certification** (HIPAA, PCI-DSS, etc.)
 
 
 ## Threat Model
