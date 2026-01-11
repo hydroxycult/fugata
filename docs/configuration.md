@@ -196,7 +196,7 @@ KMS_PROVIDER=Vault
 KMS_PROVIDER=Aws
 ```
 
-** Warning:** NEVER use `Local` KMS in production!
+**Warning:** NEVER use `Local` KMS in production!
 
 
 ### KMS_LOCAL_KEY
@@ -579,7 +579,7 @@ TRUSTED_PROXIES=10.0.0.1,10.0.0.2
 PROXY_MODE=Auto
 ```
 
-** Security Warning:**
+**Security Warning:**
 - **NEVER use `Auto` in production**
 - Attackers can spoof X-Forwarded-For headers
 - Use `TrustedProxy` with `TRUSTED_PROXIES` validation
