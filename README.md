@@ -35,8 +35,8 @@ cd fugata/backend
 ```bash
 cp .env.example .env
 
-#Edit .env and set:
-# DATABASE_URL=sqlite://fugada.db
+# Edit .env and set:
+# DATABASE_URL=sqlite://fugata.db
 ```
 
 **Option B: PostgreSQL** (production)
