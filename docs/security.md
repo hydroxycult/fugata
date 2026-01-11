@@ -5,7 +5,7 @@
 **Please do not open public GitHub issues for security vulnerabilities.**
 
 If you discover a security vulnerability in Fugata, please report it privately.
-[Contact here.](https://discord.com/users/1424341570965999646)
+Contact [here](https://discord.com/users/1424341570965999646) or [here](mailto:hydroxycult@gmail.com).
 ## Include in your report
 
 1. **Description:** Clear explanation of the vulnerability.
