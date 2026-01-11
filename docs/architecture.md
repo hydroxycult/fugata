@@ -1,6 +1,6 @@
 # Architecture
 
-This document provides a deep technical examination of Fugata's system design, implementation details, and design decisions.
+This document provides a deep technical examination of Fugata's system design, and implementation details.
 
 ## System Overview
 
@@ -238,22 +238,6 @@ One-time secrets are never cached because they must be deleted after first acces
 The replay cache prevents deletion token reuse. When a deletion request succeeds, the deletion token is added to the replay cache with a TTL. Subsequent deletion requests with the same token are rejected. The cache keys are the SHA-256 hash of the token for privacy. Entries expire after the configured TOKEN_REPLAY_TTL_HOURS.
 
 Both caches use parking_lot Mutex for synchronization rather than async mutexes because the critical sections are very fast (HashMap operations only) and don't contain await points.
-
-## Design Decisions
-
-The choice of Rust provides memory safety guarantees that eliminate entire classes of vulnerabilities common in C/C++ codebases. The type system enforces correctness at compile time. The ownership model prevents data races. There are no null pointer dereferences, buffer overflows, or use-after-free bugs unless explicitly introduced through unsafe code, which this project does not use.
-
-SQLx was chosen over Diesel because it provides async support natively rather than through compatibility layers. The compile-time query checking catches SQL errors during builds rather than at runtime. Supporting both PostgreSQL and SQLite with the same query syntax simplifies testing while allowing production deployments to use a proper database.
-
-The fail-closed audit logging design prioritizes security over availability. Some systems log on a best-effort basis to maximize uptime. Fugata takes the opposite approach: if we cannot audit a security event, we cannot proceed with the operation. This creates a complete audit trail at the cost of failing requests when the audit system is down.
-
-The decision not to encrypt metadata is intentional. Metadata is meant for user-provided labels to help organize secrets, not for storing sensitive data. Encrypting it would require a searchable encryption scheme or revealing data to decrypt for searches, both of which add significant complexity. The system assumes users understand not to put sensitive data in metadata, and this is documented clearly.
-
-The lack of automatic expiry cleanup is a pragmatic choice for a reference implementation. Expired secrets are deleted lazily when accessed. For production systems, a periodic cleanup job running every few hours would keep the database size bounded. This can be implemented externally through a simple cron job that queries for expired secrets and deletes them.
-
-Local KMS is intentionally insecure for production use. It exists solely to make local development easy without requiring external dependencies. The documentation emphasizes this clearly and repeatedly to ensure users don't accidentally deploy it in production. The KEK lives in process memory, not an HSM, and rotations are impossible without data migration.
-
-The token bucket rate limiting algorithm was chosen because it's well-understood, simple to implement correctly, and provides good burst handling. Alternative algorithms like leaky bucket or sliding window log were considered but offered no significant advantages for this use case while being more complex.
 
 ## Security Boundaries
 
