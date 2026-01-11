@@ -48,7 +48,7 @@ createdb fugata
 # Or via psql:
 psql -U postgres
 CREATE DATABASE fugata;
-\q
+
 
 cp .env.example .env
 
